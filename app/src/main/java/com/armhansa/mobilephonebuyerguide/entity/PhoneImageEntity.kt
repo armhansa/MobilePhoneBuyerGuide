@@ -7,7 +7,7 @@ data class PhoneImageEntity(
     val id: Int,
 
     @SerializedName("url")
-    val url: String,
+    var url: String,
 
     @SerializedName("mobile_id")
     val mobileId: Int
