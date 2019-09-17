@@ -3,7 +3,7 @@ package com.armhansa.mobilephonebuyerguide
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.armhansa.mobilephonebuyerguide.fragment.FavoriteListFragment
-import com.armhansa.mobilephonebuyerguide.fragment.PhoneListFragment
+import com.armhansa.mobilephonebuyerguide.fragment.phonelist.PhoneListFragment
 import com.armhansa.mobilephonebuyerguide.model.TabModel
 import com.armhansa.mobilephonebuyerguide.ui.main.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
