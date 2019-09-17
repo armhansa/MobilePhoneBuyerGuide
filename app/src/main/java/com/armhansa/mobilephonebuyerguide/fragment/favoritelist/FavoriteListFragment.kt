@@ -1,4 +1,4 @@
-package com.armhansa.mobilephonebuyerguide.fragment
+package com.armhansa.mobilephonebuyerguide.fragment.favoritelist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +20,5 @@ class FavoriteListFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorite_list, container, false)
     }
-
 
 }
