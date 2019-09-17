@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 
 class PhoneListAdapter(private val context: Context?, private val listener: OnClickItemPhoneListener) :
     RecyclerView.Adapter<PhoneViewHolder>() {
-
     private var phonesEntity: List<PhoneEntity> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhoneViewHolder {
