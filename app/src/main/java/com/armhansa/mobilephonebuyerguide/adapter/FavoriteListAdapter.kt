@@ -17,7 +17,7 @@ class FavoriteListAdapter(
     private val listener: OnClickItemPhoneListener,
     private val pref: SharedPreferences
 ) : RecyclerView.Adapter<FavoriteHolder>() {
-    private var phonesModel: List<PhoneModel> = arrayListOf()
+    private var phonesModel: ArrayList<PhoneModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteHolder {
         return FavoriteHolder(parent, context, listener)
@@ -29,8 +29,16 @@ class FavoriteListAdapter(
         holder.bind(phonesModel[position])
     }
 
-    fun setFavoriteModel(phonesModel: List<PhoneModel>) {
+    fun setFavoriteModel(phonesModel: ArrayList<PhoneModel>) {
         this.phonesModel = phonesModel
+        notifyDataSetChanged()
+    }
+
+    fun removeAt(index: Int) {
+        val editor = pref.edit()
+        editor.putBoolean("FAV_${phonesModel[index].id}", false)
+        editor.apply()
+        phonesModel.removeAt(index)
         notifyDataSetChanged()
     }
 
