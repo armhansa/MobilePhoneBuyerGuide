@@ -8,7 +8,7 @@
              android:paddingEnd="8dp"
              android:paddingTop="4dp"
              android:paddingBottom="4dp"
-             tools:context=".fragment.favoritelist.FavoriteListFragment">
+             tools:context=".fragment.FavoriteListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFavorite"

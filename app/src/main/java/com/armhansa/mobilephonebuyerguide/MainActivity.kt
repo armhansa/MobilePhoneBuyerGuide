@@ -7,7 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.armhansa.mobilephonebuyerguide.constaint.ConstantValue
 import com.armhansa.mobilephonebuyerguide.constaint.SortType
-import com.armhansa.mobilephonebuyerguide.fragment.favoritelist.FavoriteListFragment
+import com.armhansa.mobilephonebuyerguide.fragment.FavoriteListFragment
 import com.armhansa.mobilephonebuyerguide.fragment.phonelist.PhoneListFragment
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.TabModel

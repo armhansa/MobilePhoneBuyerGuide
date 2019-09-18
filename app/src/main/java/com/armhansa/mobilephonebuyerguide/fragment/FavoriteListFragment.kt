@@ -1,4 +1,4 @@
-package com.armhansa.mobilephonebuyerguide.fragment.favoritelist
+package com.armhansa.mobilephonebuyerguide.fragment
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -20,14 +20,12 @@ import kotlinx.android.synthetic.main.fragment_favorite_list.*
 class FavoriteListFragment(private val pref: SharedPreferences) : Fragment()
     , OnClickItemPhoneListener, OnPhoneModelsChangeListener {
 
-//    private val presenter by lazy {
-//        FavoriteListPresenter.getInstance(this)
-//    }
     private val favoriteListModel: FavoriteListModel = FavoriteListModel.getInstance()
     private lateinit var favoriteListAdapter: FavoriteListAdapter
 
     companion object {
-        fun newInstance(sharedPreferences: SharedPreferences) = FavoriteListFragment(sharedPreferences)
+        fun newInstance(sharedPreferences: SharedPreferences) =
+            FavoriteListFragment(sharedPreferences)
     }
 
     override fun onCreateView(
