@@ -13,11 +13,38 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-        <androidx.viewpager.widget.ViewPager
-                android:id="@+id/pagerPhoneImg"
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"/>
+                android:layout_height="300dp">
 
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/pagerPhoneImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#66FFFFFF">
+                <TextView
+                        android:id="@+id/txtRating"
+                        tools:text="Rating: 4.9"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"/>
+
+                <TextView
+                        android:id="@+id/txtPrice"
+                        tools:text="Price: $179.99"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
                 android:layout_width="match_parent"

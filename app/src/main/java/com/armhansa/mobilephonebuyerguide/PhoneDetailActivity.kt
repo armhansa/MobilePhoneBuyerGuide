@@ -33,11 +33,21 @@ class PhoneDetailActivity : AppCompatActivity(), PhoneDetailInterface {
     }
 
     private fun setView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         val phoneModel: PhoneModel = intent.getParcelableExtra(PHONE_MODEL_KEY)
         presenter.getImageFromApi(phoneModel.id)
+        txtRating.text = getString(R.string.rating_style, phoneModel.rating)
+        txtPrice.text = getString(R.string.price_style, phoneModel.price)
         txtName.text = phoneModel.name
         txtBrand.text = phoneModel.brand
         txtDesc.text = phoneModel.description
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     override fun toastError(t: Throwable) {
