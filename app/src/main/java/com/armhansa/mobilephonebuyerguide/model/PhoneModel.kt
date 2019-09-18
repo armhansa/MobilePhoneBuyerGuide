@@ -12,5 +12,5 @@ data class PhoneModel(
     val description: String,
     val price: Float,
     val rating: Float,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 ) : Parcelable
