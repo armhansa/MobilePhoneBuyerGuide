@@ -1,6 +1,9 @@
 package com.armhansa.mobilephonebuyerguide.fragment.phonelist
 
+import android.content.SharedPreferences
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
+import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
+import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -8,12 +11,15 @@ import retrofit2.Response
 
 class PhoneListPresenter(
     private val listener: PhoneListInterface,
-    private val phoneApiManager: PhoneManager
+    private val phoneApiManager: PhoneManager,
+    private val pref: SharedPreferences
 ) {
-
     companion object {
-        fun getInstance(listener: PhoneListInterface, phoneApiManager: PhoneManager) =
-            PhoneListPresenter(listener, phoneApiManager)
+        fun getInstance(
+            listener: PhoneListInterface,
+            phoneApiManager: PhoneManager,
+            pref: SharedPreferences
+        ) = PhoneListPresenter(listener, phoneApiManager, pref)
     }
 
     fun getPhoneApi() {
@@ -30,6 +36,32 @@ class PhoneListPresenter(
                 }
             }
         })
+    }
+
+    fun getPhoneModelFrom(
+        phonesEntity: List<PhoneEntity>,
+        favoriteListModel: FavoriteListModel
+    ): List<PhoneModel> {
+        val phonesModel: ArrayList<PhoneModel> = arrayListOf()
+        favoriteListModel.reset()
+        for (i in 0 until phonesEntity.count()) {
+            val isFavorite = pref.getBoolean("FAV_${phonesEntity[i].id}", false)
+            val phoneModel = PhoneModel(
+                phonesEntity[i].id,
+                phonesEntity[i].name,
+                phonesEntity[i].brand,
+                phonesEntity[i].thumbImageURL,
+                phonesEntity[i].description,
+                phonesEntity[i].price,
+                phonesEntity[i].rating,
+                isFavorite
+            )
+            phonesModel.add(phoneModel)
+            if (isFavorite)
+                favoriteListModel.add(phoneModel)
+        }
+        favoriteListModel.callbackListener()
+        return phonesModel
     }
 
 }

@@ -2,26 +2,25 @@ package com.armhansa.mobilephonebuyerguide
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneImagePagerAdapter
-import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
 import com.armhansa.mobilephonebuyerguide.entity.PhoneImageEntity
+import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_phone_detail.*
 import kotlinx.android.synthetic.main.item_phone.txtName
 
 class PhoneDetailActivity : AppCompatActivity(), PhoneDetailInterface {
-    private val presenter: PhoneDetailPresenter by lazy { PhoneDetailPresenter(this, PhoneManager()) }
+    private val presenter: PhoneDetailPresenter by lazy { PhoneDetailPresenter.getInstance(this, PhoneManager()) }
     private lateinit var phoneImagePagerAdapter: PhoneImagePagerAdapter
 
     companion object {
         private const val PHONE_MODEL_KEY = "phoneModelKey"
-        fun startActivity(context: Context?, phoneEntity: PhoneEntity) {
-            context?.startActivity(Intent(context,PhoneDetailActivity::class.java).also {
-                it.putExtra(PHONE_MODEL_KEY, phoneEntity)
+        fun startActivity(context: Context?, phoneModel: PhoneModel) {
+            context?.startActivity(Intent(context, PhoneDetailActivity::class.java).also {
+                it.putExtra(PHONE_MODEL_KEY, phoneModel)
             })
         }
     }
@@ -34,7 +33,7 @@ class PhoneDetailActivity : AppCompatActivity(), PhoneDetailInterface {
     }
 
     private fun setView() {
-        val phoneModel: PhoneEntity = intent.getParcelableExtra(PHONE_MODEL_KEY)
+        val phoneModel: PhoneModel = intent.getParcelableExtra(PHONE_MODEL_KEY)
         presenter.getImageFromApi(phoneModel.id)
         txtName.text = phoneModel.name
         txtBrand.text = phoneModel.brand
