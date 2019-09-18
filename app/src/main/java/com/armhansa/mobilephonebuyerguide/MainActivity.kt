@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.armhansa.mobilephonebuyerguide.constaint.ConstantValue
-import com.armhansa.mobilephonebuyerguide.constaint.SortType
+import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
+import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.fragment.FavoriteListFragment
 import com.armhansa.mobilephonebuyerguide.fragment.phonelist.PhoneListFragment
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel

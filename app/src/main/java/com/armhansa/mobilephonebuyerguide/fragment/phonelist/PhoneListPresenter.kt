@@ -2,7 +2,7 @@ package com.armhansa.mobilephonebuyerguide.fragment.phonelist
 
 import android.content.SharedPreferences
 import com.armhansa.mobilephonebuyerguide.MainActivity
-import com.armhansa.mobilephonebuyerguide.constaint.SortType
+import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel

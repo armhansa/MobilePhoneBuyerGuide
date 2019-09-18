@@ -1,4 +1,4 @@
-package com.armhansa.mobilephonebuyerguide.constaint
+package com.armhansa.mobilephonebuyerguide.constant
 
 enum class SortType(val type: String) {
     LOW_PRICE("Price low to high"),

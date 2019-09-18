@@ -1,4 +1,4 @@
-package com.armhansa.mobilephonebuyerguide.constaint
+package com.armhansa.mobilephonebuyerguide.constant
 
 class ConstantValue {
     companion object {

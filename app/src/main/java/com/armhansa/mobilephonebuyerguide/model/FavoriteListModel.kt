@@ -1,6 +1,6 @@
 package com.armhansa.mobilephonebuyerguide.model
 
-import com.armhansa.mobilephonebuyerguide.constaint.SortType
+import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.listener.OnPhoneModelsChangeListener
 
 class FavoriteListModel private constructor(private var favorites: ArrayList<PhoneModel>) {

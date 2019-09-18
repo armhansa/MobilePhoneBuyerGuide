@@ -13,7 +13,7 @@ import com.armhansa.mobilephonebuyerguide.MainActivity
 import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneListAdapter
-import com.armhansa.mobilephonebuyerguide.constaint.SortType
+import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
