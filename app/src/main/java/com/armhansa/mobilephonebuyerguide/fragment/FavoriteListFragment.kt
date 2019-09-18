@@ -14,21 +14,26 @@ import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.adapter.FavoriteListAdapter
 import com.armhansa.mobilephonebuyerguide.extension.SwipeToDeleteCallback
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
+import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteRemoveListener
 import com.armhansa.mobilephonebuyerguide.listener.OnPhoneModelsChangeListener
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import kotlinx.android.synthetic.main.fragment_favorite_list.*
 
 
-class FavoriteListFragment(private val pref: SharedPreferences) : Fragment()
+class FavoriteListFragment(
+    private val pref: SharedPreferences,
+    private val listener: OnFavoriteRemoveListener
+) : Fragment()
     , OnClickItemPhoneListener, OnPhoneModelsChangeListener {
 
     private val favoriteListModel: FavoriteListModel = FavoriteListModel.getInstance()
     private lateinit var favoriteListAdapter: FavoriteListAdapter
 
     companion object {
-        fun newInstance(sharedPreferences: SharedPreferences) =
-            FavoriteListFragment(sharedPreferences)
+        fun newInstance(sharedPreferences: SharedPreferences,
+                        listener: OnFavoriteRemoveListener) =
+            FavoriteListFragment(sharedPreferences, listener)
     }
 
     override fun onCreateView(
@@ -52,7 +57,8 @@ class FavoriteListFragment(private val pref: SharedPreferences) : Fragment()
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rvFavorite.adapter as FavoriteListAdapter
-                adapter.removeAt(viewHolder.adapterPosition)
+                val removePhone = adapter.removeAt(viewHolder.adapterPosition)
+                listener.changeStarState(removePhone)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)

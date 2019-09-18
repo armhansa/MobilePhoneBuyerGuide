@@ -34,12 +34,14 @@ class FavoriteListAdapter(
         notifyDataSetChanged()
     }
 
-    fun removeAt(index: Int) {
+    fun removeAt(index: Int): PhoneModel {
         val editor = pref.edit()
         editor.putBoolean("FAV_${phonesModel[index].id}", false)
         editor.apply()
+        var removePhone = phonesModel[index]
         phonesModel.removeAt(index)
         notifyDataSetChanged()
+        return removePhone
     }
 
 }

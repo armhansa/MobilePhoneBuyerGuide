@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val phoneFragment by lazy { PhoneListFragment.newInstance(sharedPreferences) }
-    private val favoriteFragment by lazy { FavoriteListFragment.newInstance(sharedPreferences) }
+    private val favoriteFragment by lazy { FavoriteListFragment.newInstance(sharedPreferences, phoneFragment) }
 
     private val favoriteListModel by lazy { FavoriteListModel.getInstance() }
     private var checkedItem = 0

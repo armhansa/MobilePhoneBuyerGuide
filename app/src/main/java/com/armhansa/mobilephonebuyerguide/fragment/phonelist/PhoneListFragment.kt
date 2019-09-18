@@ -16,13 +16,14 @@ import com.armhansa.mobilephonebuyerguide.adapter.PhoneListAdapter
 import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
+import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteRemoveListener
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import kotlinx.android.synthetic.main.fragment_phone_list.*
 
-class PhoneListFragment(private val pref: SharedPreferences) : Fragment(), PhoneListInterface,
-    OnClickItemPhoneListener {
+class PhoneListFragment(private val pref: SharedPreferences) : Fragment()
+    , PhoneListInterface, OnClickItemPhoneListener, OnFavoriteRemoveListener {
 
     private val presenter by lazy {
         PhoneListPresenter.getInstance(this, PhoneManager(), pref)
@@ -71,6 +72,11 @@ class PhoneListFragment(private val pref: SharedPreferences) : Fragment(), Phone
     fun sort(sortType: SortType) {
         val sortedPhones = presenter.sort(phoneListAdapter.getPhones(), sortType)
         phoneListAdapter.setPhonesModel(sortedPhones)
+    }
+
+    override fun changeStarState(phoneModel: PhoneModel) {
+        phoneListAdapter.changeStarAt(phoneModel)
+        sort(MainActivity.SORT_TYPE)
     }
 
 }

@@ -20,7 +20,7 @@ class PhoneListAdapter(
     private val listener: OnClickItemPhoneListener,
     private val pref: SharedPreferences
 ) : RecyclerView.Adapter<PhoneViewHolder>() {
-    private var phonesModel: List<PhoneModel> = arrayListOf()
+    private var phonesModel: ArrayList<PhoneModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhoneViewHolder {
         return PhoneViewHolder(parent, context, listener, pref)
@@ -33,8 +33,14 @@ class PhoneListAdapter(
     }
 
     fun setPhonesModel(phonesModel: List<PhoneModel>) {
-        this.phonesModel = phonesModel
+        this.phonesModel = ArrayList(phonesModel)
         notifyDataSetChanged()
+    }
+
+    fun changeStarAt(phoneModel: PhoneModel) {
+        phonesModel.remove(phoneModel)
+        phoneModel.isFavorite = false
+        phonesModel.add(phoneModel)
     }
 
     fun getPhones() = ArrayList(phonesModel)
