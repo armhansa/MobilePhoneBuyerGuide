@@ -26,10 +26,6 @@ class PhoneDetailPresenter(
             override fun onResponse(call: Call<List<PhoneImageEntity>>, response: Response<List<PhoneImageEntity>>) {
                 response.body()?.apply {
                     if (this.isNotEmpty()) {
-                        Log.d("armhansa=>", "Count = ${this.count()}")
-                        for (i in 0 until this.count()) {
-                            Log.d("armhansa=>", "Item$i = ${this[i].url}")
-                        }
                         listener.setPhoneImageList(this)
                     }
                 }
