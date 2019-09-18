@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.armhansa.mobilephonebuyerguide.MainActivity
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
@@ -35,6 +36,8 @@ class PhoneListAdapter(
         this.phonesModel = phonesModel
         notifyDataSetChanged()
     }
+
+    fun getPhones() = ArrayList(phonesModel)
 }
 
 class PhoneViewHolder(
@@ -72,7 +75,9 @@ class PhoneViewHolder(
             } else {
                 FavoriteListModel.getInstance().add(phoneModel)
             }
+            FavoriteListModel.getInstance().sort(MainActivity.SORT_TYPE)
             FavoriteListModel.getInstance().callbackListener()
+
             phoneModel.isFavorite = !phoneModel.isFavorite
             val prefEditor = pref.edit()
             prefEditor.putBoolean("FAV_${phoneModel.id}", phoneModel.isFavorite)

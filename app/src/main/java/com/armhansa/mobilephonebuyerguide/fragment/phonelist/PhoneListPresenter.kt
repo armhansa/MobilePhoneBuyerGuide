@@ -1,6 +1,8 @@
 package com.armhansa.mobilephonebuyerguide.fragment.phonelist
 
 import android.content.SharedPreferences
+import com.armhansa.mobilephonebuyerguide.MainActivity
+import com.armhansa.mobilephonebuyerguide.constaint.SortType
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
@@ -60,8 +62,31 @@ class PhoneListPresenter(
             if (isFavorite)
                 favoriteListModel.add(phoneModel)
         }
+        favoriteListModel.sort(MainActivity.SORT_TYPE)
         favoriteListModel.callbackListener()
         return phonesModel
+    }
+
+    fun sort(phones: ArrayList<PhoneModel>, sortType: SortType): ArrayList<PhoneModel> {
+        val newPhones: ArrayList<PhoneModel> = arrayListOf()
+        for (i in 0 until phones.count()) {
+            var startValue: Float = if (sortType != SortType.RATING) phones[0].price else phones[0].rating
+            var targetIndex = 0
+            for (j in 0 until phones.count()) {
+                if ((sortType == SortType.LOW_PRICE && phones[j].price < startValue)
+                    || (sortType == SortType.HIGH_PRICE && phones[j].price > startValue)
+                ) {
+                    targetIndex = j
+                    startValue = phones[j].price
+                } else if (sortType == SortType.RATING && phones[j].rating > startValue) {
+                    targetIndex = j
+                    startValue = phones[j].rating
+                }
+            }
+            newPhones.add(phones[targetIndex])
+            phones.removeAt(targetIndex)
+        }
+        return newPhones
     }
 
 }

@@ -28,8 +28,8 @@
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
 
             <ImageButton
-                    android:src="@android:drawable/ic_menu_sort_by_size"
                     android:id="@+id/btnSort"
+                    android:src="@android:drawable/ic_menu_sort_by_size"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentEnd="true"/>

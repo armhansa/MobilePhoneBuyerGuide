@@ -9,9 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.armhansa.mobilephonebuyerguide.MainActivity
 import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneListAdapter
+import com.armhansa.mobilephonebuyerguide.constaint.SortType
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
@@ -58,11 +60,17 @@ class PhoneListFragment(private val pref: SharedPreferences) : Fragment(), Phone
 
     override fun setPhoneList(phones: List<PhoneEntity>) {
         val phonesModel = presenter.getPhoneModelFrom(phones, favoriteListModel)
-        phoneListAdapter.setPhonesModel(phonesModel)
+        val sortedPhones = presenter.sort(ArrayList(phonesModel), MainActivity.SORT_TYPE)
+        phoneListAdapter.setPhonesModel(sortedPhones)
     }
 
     override fun sendToDetailPage(phoneModel: PhoneModel) {
         PhoneDetailActivity.startActivity(context, phoneModel)
+    }
+
+    fun sort(sortType: SortType) {
+        val sortedPhones = presenter.sort(phoneListAdapter.getPhones(), sortType)
+        phoneListAdapter.setPhonesModel(sortedPhones)
     }
 
 }

@@ -45,12 +45,13 @@ class FavoriteListModel private constructor(private var favorites: ArrayList<Pho
         for (i in 0 until favorites.count()) {
             var startValue: Float = if (sortType != SortType.RATING) favorites[0].price else favorites[0].rating
             var targetIndex = 0
-            for (j in 0 until favorites.count()-1) {
+            for (j in 0 until favorites.count()) {
                 if ((sortType == SortType.LOW_PRICE && favorites[j].price < startValue)
-                    || (sortType == SortType.HIGH_PRICE && favorites[j].price > startValue)) {
+                    || (sortType == SortType.HIGH_PRICE && favorites[j].price > startValue)
+                ) {
                     targetIndex = j
                     startValue = favorites[j].price
-                } else if (sortType == SortType.RATING && favorites[j].rating > startValue){
+                } else if (sortType == SortType.RATING && favorites[j].rating > startValue) {
                     targetIndex = j
                     startValue = favorites[j].rating
                 }
@@ -58,6 +59,7 @@ class FavoriteListModel private constructor(private var favorites: ArrayList<Pho
             newFavorites.add(favorites[targetIndex])
             favorites.removeAt(targetIndex)
         }
+
         favorites = newFavorites
     }
 
