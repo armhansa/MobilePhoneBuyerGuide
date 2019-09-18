@@ -1,10 +1,10 @@
 package com.armhansa.mobilephonebuyerguide.model
 
-import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
+import com.armhansa.mobilephonebuyerguide.listener.OnPhoneModelsChangeListener
 
 class PhoneListModel private constructor(private var phones: List<PhoneModel>) {
 
-    private var listener: OnFavoriteChangeListener? = null
+    private var listener: OnPhoneModelsChangeListener? = null
 
     companion object {
         private var phoneInstance: PhoneListModel? = null
@@ -19,12 +19,12 @@ class PhoneListModel private constructor(private var phones: List<PhoneModel>) {
 
     fun getPhones(): List<PhoneModel> = phones
 
-    fun setListener(listener: OnFavoriteChangeListener) {
+    fun setListener(listener: OnPhoneModelsChangeListener) {
         this.listener = listener
     }
 
     private fun callbackListener() {
-        listener?.refreshFavorites()
+        listener?.refreshPhoneModels()
     }
 
     fun set(newPhones: List<PhoneModel>) {

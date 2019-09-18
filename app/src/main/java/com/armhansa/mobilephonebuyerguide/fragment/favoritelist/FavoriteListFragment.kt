@@ -12,13 +12,13 @@ import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.adapter.FavoriteListAdapter
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
-import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
+import com.armhansa.mobilephonebuyerguide.listener.OnPhoneModelsChangeListener
 import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import kotlinx.android.synthetic.main.fragment_favorite_list.*
 
 class FavoriteListFragment(private val pref: SharedPreferences) : Fragment()
-    , OnClickItemPhoneListener, OnFavoriteChangeListener {
+    , OnClickItemPhoneListener, OnPhoneModelsChangeListener {
 
 //    private val presenter by lazy {
 //        FavoriteListPresenter.getInstance(this)
@@ -54,7 +54,7 @@ class FavoriteListFragment(private val pref: SharedPreferences) : Fragment()
         PhoneDetailActivity.startActivity(context, phoneModel)
     }
 
-    override fun refreshFavorites() {
+    override fun refreshPhoneModels() {
         favoriteListAdapter.setFavoriteModel(favoriteListModel.getFavorites())
     }
 
