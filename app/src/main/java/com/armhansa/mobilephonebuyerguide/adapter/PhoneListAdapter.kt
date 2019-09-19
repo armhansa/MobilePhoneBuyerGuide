@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -55,7 +56,7 @@ class PhoneViewHolder(
 ) {
     private val imgPhone: ImageView = itemView.findViewById(R.id.imgPhone)
     private val txtName: TextView = itemView.findViewById(R.id.txtName)
-    private val btnFav: ImageView = itemView.findViewById(R.id.btnFav)
+    private val btnFav: ImageButton = itemView.findViewById(R.id.btnFav)
     private val txtDesc: TextView = itemView.findViewById(R.id.txtDesc)
     private val txtPrice: TextView = itemView.findViewById(R.id.txtPrice)
     private val txtRating: TextView = itemView.findViewById(R.id.txtRating)

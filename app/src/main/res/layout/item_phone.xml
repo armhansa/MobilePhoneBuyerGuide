@@ -42,11 +42,12 @@
                         android:layout_width="250dp"
                         android:layout_height="match_parent"/>
 
-                <ImageView
+                <ImageButton
                         android:id="@+id/btnFav"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
+                        android:background="@color/transparent100"
                         card_view:srcCompat="@drawable/unfav"
                         android:padding="0dp"
                         android:scaleType="fitCenter"
@@ -68,13 +69,14 @@
                 <TextView
                         android:id="@+id/txtPrice"
                         tools:text="Price: $179.99"
-                        android:layout_width="wrap_content"
+                        android:layout_width="125dp"
                         android:layout_height="match_parent"/>
 
                 <TextView
                         android:id="@+id/txtRating"
                         tools:text="Rating: 4.9"
-                        android:layout_width="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_width="125dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="12dp"/>
