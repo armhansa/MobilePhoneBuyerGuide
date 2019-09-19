@@ -56,7 +56,7 @@ class PhoneViewHolder(
 ) {
     private val imgPhone: ImageView = itemView.findViewById(R.id.imgPhone)
     private val txtName: TextView = itemView.findViewById(R.id.txtName)
-    private val btnFav: ImageButton = itemView.findViewById(R.id.btnFav)
+    private val btnFav: ImageView = itemView.findViewById(R.id.btnFav)
     private val txtDesc: TextView = itemView.findViewById(R.id.txtDesc)
     private val txtPrice: TextView = itemView.findViewById(R.id.txtPrice)
     private val txtRating: TextView = itemView.findViewById(R.id.txtRating)
@@ -72,8 +72,8 @@ class PhoneViewHolder(
                 .into(imgPhone)
         }
         btnFav.setImageResource(
-            if (phoneModel.isFavorite) android.R.drawable.star_big_on
-            else android.R.drawable.star_big_off
+            if (phoneModel.isFavorite) R.drawable.fav
+            else R.drawable.unfav
         )
         btnFav.setOnClickListener {
             if (phoneModel.isFavorite) {

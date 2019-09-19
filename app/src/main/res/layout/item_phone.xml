@@ -39,15 +39,17 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_width="wrap_content"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent"/>
 
-                <ImageButton
+                <ImageView
                         android:id="@+id/btnFav"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
-                        card_view:srcCompat="@android:drawable/btn_star_big_on"
+                        card_view:srcCompat="@drawable/unfav"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
                         android:contentDescription="@string/fav_btn_desc"/>
 
             </RelativeLayout>
@@ -82,6 +84,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </androidx.cardview.widget.CardView>
