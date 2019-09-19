@@ -16,12 +16,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val sharedPreferences: SharedPreferences by lazy {
-        getSharedPreferences(ConstantValue.PREFS_KEY, Context.MODE_PRIVATE)
-    }
-
-    private val phoneFragment by lazy { PhoneListFragment.newInstance(sharedPreferences) }
-    private val favoriteFragment by lazy { FavoriteListFragment.newInstance(sharedPreferences, phoneFragment) }
+    private val phoneFragment by lazy { PhoneListFragment.newInstance() }
+    private val favoriteFragment by lazy { FavoriteListFragment.newInstance(phoneFragment) }
 
     private val favoriteListModel by lazy { FavoriteListModel.getInstance() }
     private var checkedItem = 0

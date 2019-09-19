@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 class FavoriteListAdapter(
     private val context: Context?,
     private val listener: OnClickItemPhoneListener,
-    private val pref: SharedPreferences
+    private val pref: SharedPreferences? = null
 ) : RecyclerView.Adapter<FavoriteHolder>() {
     private var phonesModel: ArrayList<PhoneModel> = arrayListOf()
 
@@ -35,10 +35,10 @@ class FavoriteListAdapter(
     }
 
     fun removeAt(index: Int): PhoneModel {
-        val editor = pref.edit()
-        editor.putBoolean("FAV_${phonesModel[index].id}", false)
-        editor.apply()
-        var removePhone = phonesModel[index]
+        val editor = pref?.edit()
+        editor?.putBoolean("FAV_${phonesModel[index].id}", false)
+        editor?.apply()
+        val removePhone = phonesModel[index]
         phonesModel.removeAt(index)
         notifyDataSetChanged()
         return removePhone

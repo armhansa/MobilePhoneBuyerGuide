@@ -1,5 +1,6 @@
 package com.armhansa.mobilephonebuyerguide.fragment.phonelist
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.armhansa.mobilephonebuyerguide.MainActivity
 import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneListAdapter
+import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
 import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
@@ -22,17 +24,20 @@ import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import kotlinx.android.synthetic.main.fragment_phone_list.*
 
-class PhoneListFragment(private val pref: SharedPreferences) : Fragment()
+class PhoneListFragment : Fragment()
     , PhoneListInterface, OnClickItemPhoneListener, OnFavoriteRemoveListener {
-
-    private val presenter by lazy {
-        PhoneListPresenter.getInstance(this, PhoneManager(), pref)
+    companion object {
+        fun newInstance() = PhoneListFragment()
     }
+
+    private val presenter by lazy { PhoneListPresenter.getInstance(this, PhoneManager(), pref) }
     private val favoriteListModel: FavoriteListModel = FavoriteListModel.getInstance()
     private lateinit var phoneListAdapter: PhoneListAdapter
-
-    companion object {
-        fun newInstance(pref: SharedPreferences) = PhoneListFragment(pref)
+    private val pref: SharedPreferences by lazy {
+        context!!.getSharedPreferences(
+            ConstantValue.PREFS_KEY,
+            Context.MODE_PRIVATE
+        )
     }
 
     override fun onCreateView(
