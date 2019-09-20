@@ -13,7 +13,5 @@ class PhoneManager {
             .baseUrl(BASE_PHONE_API)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .run {
-                create(PhoneApiService::class.java)
-            }
+            .run { create(PhoneApiService::class.java) }
 }

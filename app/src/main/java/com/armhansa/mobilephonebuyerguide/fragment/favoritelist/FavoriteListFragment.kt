@@ -1,4 +1,4 @@
-package com.armhansa.mobilephonebuyerguide.fragment
+package com.armhansa.mobilephonebuyerguide.fragment.favoritelist
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -14,26 +14,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.adapter.FavoriteListAdapter
 import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
+import com.armhansa.mobilephonebuyerguide.extension.SortingPhoneModelList
 import com.armhansa.mobilephonebuyerguide.extension.SwipeToDeleteCallback
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
+import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteRemoveListener
-import com.armhansa.mobilephonebuyerguide.listener.OnPhoneModelsChangeListener
-import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import kotlinx.android.synthetic.main.fragment_favorite_list.*
 
 class FavoriteListFragment : Fragment()
-    , OnClickItemPhoneListener, OnPhoneModelsChangeListener {
+    , OnClickItemPhoneListener, OnFavoriteChangeListener {
     companion object {
-        fun newInstance(listener: OnFavoriteRemoveListener) =
-            FavoriteListFragment().apply { setListener(listener) }
+        fun newInstance() = FavoriteListFragment()
     }
 
-    private val favoriteListModel: FavoriteListModel = FavoriteListModel.getInstance()
+    private var favorites: ArrayList<PhoneModel> = arrayListOf()
     private lateinit var favoriteListAdapter: FavoriteListAdapter
-    private lateinit var listener: OnFavoriteRemoveListener
-    private val pref: SharedPreferences by lazy {
-        context!!.getSharedPreferences(
+    private lateinit var phoneListener: OnFavoriteRemoveListener
+    private val pref: SharedPreferences? by lazy {
+        context?.getSharedPreferences(
             ConstantValue.PREFS_KEY,
             Context.MODE_PRIVATE
         )
@@ -43,7 +42,6 @@ class FavoriteListFragment : Fragment()
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        favoriteListModel.setListener(this)
         return inflater.inflate(com.armhansa.mobilephonebuyerguide.R.layout.fragment_favorite_list, container, false)
     }
 
@@ -59,28 +57,50 @@ class FavoriteListFragment : Fragment()
         rvFavorite.itemAnimator = DefaultItemAnimator()
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = rvFavorite.adapter as FavoriteListAdapter
-                val removePhone = adapter.removeAt(viewHolder.adapterPosition)
-                val prefEditor = pref.edit()
-                prefEditor.putBoolean("FAV_${removePhone.id}", false)
-                prefEditor.apply()
-                listener.changeStarState(removePhone)
+                val removePhone = removeFavoriteAt(viewHolder.adapterPosition)
+                favoriteListAdapter.setFavoritesModel(favorites)
+                phoneListener.changeStarState(removePhone)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(rvFavorite)
     }
 
-    fun setListener(listener: OnFavoriteRemoveListener) {
-        this.listener = listener
+    fun setPhoneListener(listener: OnFavoriteRemoveListener) {
+        this.phoneListener = listener
+    }
+
+    fun removeFavoriteAt(index: Int): PhoneModel {
+        val removeFavorite = favorites[index]
+        favorites.removeAt(index)
+        pref?.let {
+            val prefEditor = it.edit()
+            prefEditor.putBoolean("FAV_${removeFavorite.id}", false)
+            prefEditor.apply()
+        }
+        return removeFavorite
     }
 
     override fun sendToDetailPage(phoneModel: PhoneModel) {
         PhoneDetailActivity.startActivity(context, phoneModel)
     }
 
-    override fun refreshPhoneModels() {
-        favoriteListAdapter.setFavoriteModel(favoriteListModel.getFavorites())
+    override fun setFavorites(favorites: ArrayList<PhoneModel>) {
+        this.favorites.addAll(SortingPhoneModelList.sorted(favorites))
+        favoriteListAdapter.setFavoritesModel(this.favorites)
+    }
+
+    override fun add(newFavorite: PhoneModel) {
+        favorites.add(newFavorite)
+    }
+
+    override fun remove(removeFavorite: PhoneModel) {
+        favorites.remove(removeFavorite)
+    }
+
+    override fun sortFavorites() {
+        favorites = SortingPhoneModelList.sorted(favorites)
+        favoriteListAdapter.setFavoritesModel(favorites)
     }
 
 }

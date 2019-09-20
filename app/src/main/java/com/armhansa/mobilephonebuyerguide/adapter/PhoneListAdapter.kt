@@ -8,22 +8,22 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.armhansa.mobilephonebuyerguide.MainActivity
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
-import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
+import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.bumptech.glide.Glide
 
 class PhoneListAdapter(
     private val context: Context?,
-    private val listener: OnClickItemPhoneListener,
-    private val pref: SharedPreferences
+    private val phoneListener: OnClickItemPhoneListener,
+    private val favoriteListener: OnFavoriteChangeListener?,
+    private val pref: SharedPreferences?
 ) : RecyclerView.Adapter<PhoneViewHolder>() {
     private var phonesModel: ArrayList<PhoneModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhoneViewHolder {
-        return PhoneViewHolder(parent, context, listener, pref)
+        return PhoneViewHolder(parent, context, phoneListener, favoriteListener, pref)
     }
 
     override fun getItemCount(): Int = phonesModel.count()
@@ -42,15 +42,14 @@ class PhoneListAdapter(
         phoneModel.isFavorite = false
         phonesModel.add(phoneModel)
     }
-
-    fun getPhones() = ArrayList(phonesModel)
 }
 
 class PhoneViewHolder(
     parent: ViewGroup,
     private val context: Context?,
-    private val listener: OnClickItemPhoneListener,
-    private val pref: SharedPreferences
+    private val phoneListener: OnClickItemPhoneListener,
+    private val favoriteListener: OnFavoriteChangeListener?,
+    private val pref: SharedPreferences?
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_phone, parent, false)
 ) {
@@ -77,21 +76,22 @@ class PhoneViewHolder(
         )
         btnFav.setOnClickListener {
             if (phoneModel.isFavorite) {
-                FavoriteListModel.getInstance().remove(phoneModel)
+                favoriteListener?.remove(phoneModel)
             } else {
-                FavoriteListModel.getInstance().add(phoneModel)
+                favoriteListener?.add(phoneModel)
             }
-            FavoriteListModel.getInstance().sort(MainActivity.SORT_TYPE)
-            FavoriteListModel.getInstance().callbackListener()
+            favoriteListener?.sortFavorites()
 
             phoneModel.isFavorite = !phoneModel.isFavorite
-            val prefEditor = pref.edit()
-            prefEditor.putBoolean("FAV_${phoneModel.id}", phoneModel.isFavorite)
-            prefEditor.apply()
+            pref?.let {
+                val prefEditor = it.edit()
+                prefEditor.putBoolean("FAV_${phoneModel.id}", phoneModel.isFavorite)
+                prefEditor.apply()
+            }
             bind(phoneModel)
         }
         itemView.setOnClickListener {
-            listener.sendToDetailPage(phoneModel)
+            phoneListener.sendToDetailPage(phoneModel)
         }
 
     }

@@ -26,5 +26,4 @@ data class PhoneEntity(
 
     @SerializedName("rating")
     val rating: Float
-
 ) : Parcelable

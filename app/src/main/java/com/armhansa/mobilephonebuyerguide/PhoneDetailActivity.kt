@@ -13,17 +13,17 @@ import kotlinx.android.synthetic.main.activity_phone_detail.*
 import kotlinx.android.synthetic.main.item_phone.txtName
 
 class PhoneDetailActivity : AppCompatActivity(), PhoneDetailInterface {
-    private val presenter: PhoneDetailPresenter by lazy { PhoneDetailPresenter.getInstance(this, PhoneManager()) }
-    private lateinit var phoneImagePagerAdapter: PhoneImagePagerAdapter
-
     companion object {
         private const val PHONE_MODEL_KEY = "phoneModelKey"
         fun startActivity(context: Context?, phoneModel: PhoneModel) {
-            context?.startActivity(Intent(context, PhoneDetailActivity::class.java).also {
-                it.putExtra(PHONE_MODEL_KEY, phoneModel)
+            context?.startActivity(Intent(context, PhoneDetailActivity::class.java).apply {
+                putExtra(PHONE_MODEL_KEY, phoneModel)
             })
         }
     }
+
+    private val presenter: PhoneDetailPresenter by lazy { PhoneDetailPresenter.getInstance(this, PhoneManager()) }
+    private lateinit var phoneImagePagerAdapter: PhoneImagePagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

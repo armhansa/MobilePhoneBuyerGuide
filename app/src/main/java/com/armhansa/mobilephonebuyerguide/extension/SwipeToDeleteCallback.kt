@@ -1,7 +1,10 @@
-package com.armhansa.mobilephonebuyerguide.extension;
+package com.armhansa.mobilephonebuyerguide.extension
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -9,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.armhansa.mobilephonebuyerguide.R
 
 abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_mtrl_chip_close_circle)!!
+    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_forever_white_24dp)!!
     private val intrinsicWidth = deleteIcon.intrinsicWidth
     private val intrinsicHeight = deleteIcon.intrinsicHeight
     private val background = ColorDrawable()
-    private val backgroundColor = Color.parseColor("#f44336")
+    private val backgroundColor = context.getColor(R.color.swipeDelete)
+
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
     override fun onMove(

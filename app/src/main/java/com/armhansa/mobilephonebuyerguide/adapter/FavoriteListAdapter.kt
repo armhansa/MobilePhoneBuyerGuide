@@ -1,7 +1,6 @@
 package com.armhansa.mobilephonebuyerguide.adapter
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,8 +13,7 @@ import com.bumptech.glide.Glide
 
 class FavoriteListAdapter(
     private val context: Context?,
-    private val listener: OnClickItemPhoneListener,
-    private val pref: SharedPreferences? = null
+    private val listener: OnClickItemPhoneListener
 ) : RecyclerView.Adapter<FavoriteHolder>() {
     private var phonesModel: ArrayList<PhoneModel> = arrayListOf()
 
@@ -29,19 +27,9 @@ class FavoriteListAdapter(
         holder.bind(phonesModel[position])
     }
 
-    fun setFavoriteModel(phonesModel: ArrayList<PhoneModel>) {
+    fun setFavoritesModel(phonesModel: ArrayList<PhoneModel>) {
         this.phonesModel = phonesModel
         notifyDataSetChanged()
-    }
-
-    fun removeAt(index: Int): PhoneModel {
-        val editor = pref?.edit()
-        editor?.putBoolean("FAV_${phonesModel[index].id}", false)
-        editor?.apply()
-        val removePhone = phonesModel[index]
-        phonesModel.removeAt(index)
-        notifyDataSetChanged()
-        return removePhone
     }
 
 }

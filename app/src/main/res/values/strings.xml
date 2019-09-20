@@ -5,4 +5,5 @@
     <string name="price_style">Price: %1$.2f</string>
     <string name="rating_style">Rating: %1$.1f</string>
     <string name="short_price_style">%1$.2f</string>
+    <string name="sort_image_desc">Sort Image Button</string>
 </resources>

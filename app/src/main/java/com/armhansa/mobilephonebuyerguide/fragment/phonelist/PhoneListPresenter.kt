@@ -1,10 +1,8 @@
 package com.armhansa.mobilephonebuyerguide.fragment.phonelist
 
 import android.content.SharedPreferences
-import com.armhansa.mobilephonebuyerguide.MainActivity
-import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
-import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
+import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import retrofit2.Call
@@ -12,28 +10,33 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PhoneListPresenter(
-    private val listener: PhoneListInterface,
+    private val phoneListener: PhoneListInterface,
+    private val favoriteListener: OnFavoriteChangeListener?,
     private val phoneApiManager: PhoneManager,
-    private val pref: SharedPreferences
+    private val pref: SharedPreferences?
 ) {
     companion object {
         fun getInstance(
-            listener: PhoneListInterface,
+            phoneListener: PhoneListInterface,
+            favoriteListener: OnFavoriteChangeListener?,
             phoneApiManager: PhoneManager,
-            pref: SharedPreferences
-        ) = PhoneListPresenter(listener, phoneApiManager, pref)
+            pref: SharedPreferences?
+        ) = PhoneListPresenter(phoneListener, favoriteListener, phoneApiManager, pref)
     }
 
-    fun getPhoneApi() {
+    fun getPhoneModelFromApi() {
         phoneApiManager.createService().getMobiles().enqueue(object : Callback<List<PhoneEntity>> {
             override fun onFailure(call: Call<List<PhoneEntity>>, t: Throwable) {
-                listener.toastError(t)
+                phoneListener.toastError(t)
             }
 
             override fun onResponse(call: Call<List<PhoneEntity>>, response: Response<List<PhoneEntity>>) {
-                response.body()?.apply {
-                    if (this.isNotEmpty()) {
-                        listener.setPhoneList(this)
+                response.body()?.also { phonesEntity ->
+                    if (phonesEntity.isNotEmpty()) {
+                        val phonesModel = getPhoneModelFrom(phonesEntity)
+                        phoneListener.setPhones(phonesModel)
+                        val favoritesModel = getFavoriteModelFrom(phonesModel)
+                        favoriteListener?.setFavorites(favoritesModel)
                     }
                 }
             }
@@ -41,13 +44,11 @@ class PhoneListPresenter(
     }
 
     fun getPhoneModelFrom(
-        phonesEntity: List<PhoneEntity>,
-        favoriteListModel: FavoriteListModel
+        phonesEntity: List<PhoneEntity>
     ): List<PhoneModel> {
         val phonesModel: ArrayList<PhoneModel> = arrayListOf()
-        favoriteListModel.reset()
         for (i in 0 until phonesEntity.count()) {
-            val isFavorite = pref.getBoolean("FAV_${phonesEntity[i].id}", false)
+            val isFavorite = pref?.getBoolean("FAV_${phonesEntity[i].id}", false) ?: false
             val phoneModel = PhoneModel(
                 phonesEntity[i].id,
                 phonesEntity[i].name,
@@ -59,34 +60,16 @@ class PhoneListPresenter(
                 isFavorite
             )
             phonesModel.add(phoneModel)
-            if (isFavorite)
-                favoriteListModel.add(phoneModel)
         }
-        favoriteListModel.sort(MainActivity.SORT_TYPE)
-        favoriteListModel.callbackListener()
         return phonesModel
     }
 
-    fun sort(phones: ArrayList<PhoneModel>, sortType: SortType): ArrayList<PhoneModel> {
-        val newPhones: ArrayList<PhoneModel> = arrayListOf()
-        for (i in 0 until phones.count()) {
-            var startValue: Float = if (sortType != SortType.RATING) phones[0].price else phones[0].rating
-            var targetIndex = 0
-            for (j in 0 until phones.count()) {
-                if ((sortType == SortType.LOW_PRICE && phones[j].price < startValue)
-                    || (sortType == SortType.HIGH_PRICE && phones[j].price > startValue)
-                ) {
-                    targetIndex = j
-                    startValue = phones[j].price
-                } else if (sortType == SortType.RATING && phones[j].rating > startValue) {
-                    targetIndex = j
-                    startValue = phones[j].rating
-                }
-            }
-            newPhones.add(phones[targetIndex])
-            phones.removeAt(targetIndex)
+    fun getFavoriteModelFrom(phones: List<PhoneModel>): ArrayList<PhoneModel> {
+        val favorites: ArrayList<PhoneModel> = arrayListOf()
+        for (i in phones) {
+            if (i.isFavorite) favorites.add(i)
         }
-        return newPhones
+        return favorites
     }
 
 }

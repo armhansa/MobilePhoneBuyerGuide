@@ -10,16 +10,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.armhansa.mobilephonebuyerguide.MainActivity
 import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneListAdapter
 import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
-import com.armhansa.mobilephonebuyerguide.constant.SortType
-import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
+import com.armhansa.mobilephonebuyerguide.extension.SortingPhoneModelList
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
+import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteRemoveListener
-import com.armhansa.mobilephonebuyerguide.model.FavoriteListModel
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import kotlinx.android.synthetic.main.fragment_phone_list.*
@@ -30,11 +28,12 @@ class PhoneListFragment : Fragment()
         fun newInstance() = PhoneListFragment()
     }
 
-    private val presenter by lazy { PhoneListPresenter.getInstance(this, PhoneManager(), pref) }
-    private val favoriteListModel: FavoriteListModel = FavoriteListModel.getInstance()
+    private var phones: ArrayList<PhoneModel> = arrayListOf()
+    private val presenter by lazy { PhoneListPresenter.getInstance(this, favoriteListener, PhoneManager(), pref) }
+    private var favoriteListener: OnFavoriteChangeListener? = null
     private lateinit var phoneListAdapter: PhoneListAdapter
-    private val pref: SharedPreferences by lazy {
-        context!!.getSharedPreferences(
+    private val pref: SharedPreferences? by lazy {
+        context?.getSharedPreferences(
             ConstantValue.PREFS_KEY,
             Context.MODE_PRIVATE
         )
@@ -44,7 +43,7 @@ class PhoneListFragment : Fragment()
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        presenter.getPhoneApi()
+        presenter.getPhoneModelFromApi()
         return inflater.inflate(R.layout.fragment_phone_list, container, false)
     }
 
@@ -54,34 +53,37 @@ class PhoneListFragment : Fragment()
     }
 
     private fun setView() {
-        phoneListAdapter = PhoneListAdapter(context, this, pref)
+        phoneListAdapter = PhoneListAdapter(context, this, favoriteListener, pref)
         rvPhone.adapter = phoneListAdapter
         rvPhone.layoutManager = LinearLayoutManager(context)
         rvPhone.itemAnimator = DefaultItemAnimator()
+    }
+
+    fun setFavoriteListener(listener: OnFavoriteChangeListener) {
+        favoriteListener = listener
     }
 
     override fun toastError(t: Throwable) {
         Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
     }
 
-    override fun setPhoneList(phones: List<PhoneEntity>) {
-        val phonesModel = presenter.getPhoneModelFrom(phones, favoriteListModel)
-        val sortedPhones = presenter.sort(ArrayList(phonesModel), MainActivity.SORT_TYPE)
-        phoneListAdapter.setPhonesModel(sortedPhones)
+    override fun setPhones(phones: List<PhoneModel>) {
+        this.phones = SortingPhoneModelList.sorted(ArrayList(phones))
+        phoneListAdapter.setPhonesModel(this.phones)
     }
 
     override fun sendToDetailPage(phoneModel: PhoneModel) {
         PhoneDetailActivity.startActivity(context, phoneModel)
     }
 
-    fun sort(sortType: SortType) {
-        val sortedPhones = presenter.sort(phoneListAdapter.getPhones(), sortType)
-        phoneListAdapter.setPhonesModel(sortedPhones)
+    fun sortPhones() {
+        phones = SortingPhoneModelList.sorted(phones)
+        phoneListAdapter.setPhonesModel(phones)
     }
 
     override fun changeStarState(phoneModel: PhoneModel) {
         phoneListAdapter.changeStarAt(phoneModel)
-        sort(MainActivity.SORT_TYPE)
+        sortPhones()
     }
 
 }
