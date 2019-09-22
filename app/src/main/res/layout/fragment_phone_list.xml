@@ -16,4 +16,11 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/item_phone"/>
 
+    <ProgressBar
+            android:id="@+id/pbLoading"
+            style="@android:style/Widget.Holo.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
 </FrameLayout>

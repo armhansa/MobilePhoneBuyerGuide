@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,6 +71,7 @@ class PhoneListFragment : Fragment()
     override fun setPhones(phones: List<PhoneModel>) {
         this.phones = SortingPhoneModelList.sorted(ArrayList(phones))
         phoneListAdapter.setPhonesModel(this.phones)
+        pbLoading.isVisible = false
     }
 
     override fun sendToDetailPage(phoneModel: PhoneModel) {
