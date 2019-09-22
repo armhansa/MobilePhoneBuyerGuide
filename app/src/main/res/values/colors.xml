@@ -7,4 +7,5 @@
     <color name="transparent100">#00FFFFFF</color>
     <color name="transparent60">#66FFFFFF</color>
     <color name="swipeDelete">#f44336</color>
+    <color name="recycler_view_bg">#DDD</color>
 </resources>

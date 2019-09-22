@@ -25,19 +25,20 @@
                     android:minHeight="?actionBarSize"
                     android:padding="@dimen/appbar_padding"
                     android:text="@string/app_name"
-                    android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+                    android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                    tools:ignore="RelativeOverlap"/>
 
             <ImageButton
                     android:id="@+id/btnSort"
                     android:src="@drawable/ic_sort_white_24dp"
                     android:scaleType="centerInside"
                     android:background="@color/colorPrimary"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_width="@dimen/sort_image_button_width"
+                    android:layout_height="@dimen/sort_image_button_height"
+                    android:layout_marginTop="@dimen/sort_image_button_margin_top"
+                    android:layout_marginStart="@dimen/sort_image_button_margin_horizontal"
+                    android:layout_marginEnd="@dimen/sort_image_button_margin_horizontal"
+                    android:layout_marginBottom="@dimen/sort_image_button_margin_bottom"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/sort_image_desc"/>
 
