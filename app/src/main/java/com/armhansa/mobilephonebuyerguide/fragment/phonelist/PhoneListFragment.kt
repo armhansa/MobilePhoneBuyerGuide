@@ -11,11 +11,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.armhansa.mobilephonebuyerguide.activity.phonedetail.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.R
+import com.armhansa.mobilephonebuyerguide.activity.phonedetail.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneListAdapter
 import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
-import com.armhansa.mobilephonebuyerguide.extension.SortingPhoneModelList
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteRemoveListener
@@ -29,8 +28,14 @@ class PhoneListFragment : Fragment()
         fun newInstance() = PhoneListFragment()
     }
 
-    private var phones: ArrayList<PhoneModel> = arrayListOf()
-    private val presenter by lazy { PhoneListPresenter.getInstance(this, favoriteListener, PhoneManager(), pref) }
+    private val presenter by lazy {
+        PhoneListPresenter.getInstance(
+            this,
+            favoriteListener,
+            PhoneManager().createService(),
+            pref
+        )
+    }
     private var favoriteListener: OnFavoriteChangeListener? = null
     private lateinit var phoneListAdapter: PhoneListAdapter
     private val pref: SharedPreferences? by lazy {
@@ -54,7 +59,7 @@ class PhoneListFragment : Fragment()
     }
 
     private fun setView() {
-        phoneListAdapter = PhoneListAdapter(context, this, favoriteListener, pref)
+        phoneListAdapter = PhoneListAdapter(this, favoriteListener, pref)
         rvPhone.adapter = phoneListAdapter
         rvPhone.layoutManager = LinearLayoutManager(context)
         rvPhone.itemAnimator = DefaultItemAnimator()
@@ -66,11 +71,13 @@ class PhoneListFragment : Fragment()
 
     override fun toastError(t: Throwable) {
         Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
+        pbLoading.isVisible = false
     }
 
     override fun setPhones(phones: List<PhoneModel>) {
-        this.phones = SortingPhoneModelList.sorted(ArrayList(phones))
-        phoneListAdapter.setPhonesModel(this.phones)
+        presenter.setPhones(ArrayList(phones))
+        val sortedPhones = presenter.sortedPhones()
+        phoneListAdapter.setPhonesModel(sortedPhones)
         pbLoading.isVisible = false
     }
 
@@ -79,8 +86,8 @@ class PhoneListFragment : Fragment()
     }
 
     fun sortPhones() {
-        phones = SortingPhoneModelList.sorted(phones)
-        phoneListAdapter.setPhonesModel(phones)
+        val sortedPhones = presenter.sortedPhones()
+        phoneListAdapter.setPhonesModel(sortedPhones)
     }
 
     override fun changeStarState(phoneModel: PhoneModel) {

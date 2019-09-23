@@ -15,7 +15,6 @@ import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.bumptech.glide.Glide
 
 class PhoneListAdapter(
-    private val context: Context?,
     private val phoneListener: OnClickItemPhoneListener,
     private val favoriteListener: OnFavoriteChangeListener?,
     private val pref: SharedPreferences?
@@ -23,7 +22,7 @@ class PhoneListAdapter(
     private var phonesModel: ArrayList<PhoneModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhoneViewHolder {
-        return PhoneViewHolder(parent, context, phoneListener, favoriteListener, pref)
+        return PhoneViewHolder(parent, phoneListener, favoriteListener, pref)
     }
 
     override fun getItemCount(): Int = phonesModel.count()
@@ -46,7 +45,6 @@ class PhoneListAdapter(
 
 class PhoneViewHolder(
     parent: ViewGroup,
-    private val context: Context?,
     private val phoneListener: OnClickItemPhoneListener,
     private val favoriteListener: OnFavoriteChangeListener?,
     private val pref: SharedPreferences?
@@ -63,13 +61,11 @@ class PhoneViewHolder(
     fun bind(phoneModel: PhoneModel) {
         txtName.text = phoneModel.name
         txtDesc.text = phoneModel.description
-        txtPrice.text = context!!.getString(R.string.price_style, phoneModel.price)
-        txtRating.text = context.getString(R.string.rating_style, phoneModel.rating)
-        context.let { context ->
-            Glide.with(context)
-                .load(phoneModel.thumbImageURL)
-                .into(imgPhone)
-        }
+        txtPrice.text = itemView.context.getString(R.string.price_style, phoneModel.price)
+        txtRating.text = itemView.context.getString(R.string.rating_style, phoneModel.rating)
+        Glide.with(itemView.context)
+            .load(phoneModel.thumbImageURL)
+            .into(imgPhone)
         btnFav.setImageResource(
             if (phoneModel.isFavorite) R.drawable.fav
             else R.drawable.unfav

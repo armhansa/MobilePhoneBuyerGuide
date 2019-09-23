@@ -27,7 +27,7 @@ class PhoneDetailActivity : AppCompatActivity(),
     private val presenter: PhoneDetailPresenter by lazy {
         PhoneDetailPresenter.getInstance(
             this,
-            PhoneManager()
+            PhoneManager().createService()
         )
     }
     private lateinit var phoneImagePagerAdapter: PhoneImagePagerAdapter
@@ -43,13 +43,15 @@ class PhoneDetailActivity : AppCompatActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val phoneModel: PhoneModel = intent.getParcelableExtra(PHONE_MODEL_KEY)
-        presenter.getImageFromApi(phoneModel.id)
-        txtRating.text = getString(R.string.rating_style, phoneModel.rating)
-        txtPrice.text = getString(R.string.price_style, phoneModel.price)
-        txtName.text = phoneModel.name
-        txtBrand.text = phoneModel.brand
-        txtDesc.text = phoneModel.description
+        val phoneModel: PhoneModel? = intent.getParcelableExtra(PHONE_MODEL_KEY)
+        phoneModel?.let {
+            presenter.getImageFromApi(it.id)
+            txtRating.text = getString(R.string.rating_style, it.rating)
+            txtPrice.text = getString(R.string.price_style, it.price)
+            txtName.text = it.name
+            txtBrand.text = it.brand
+            txtDesc.text = it.description
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

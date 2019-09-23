@@ -2,39 +2,51 @@ package com.armhansa.mobilephonebuyerguide.fragment.phonelist
 
 import android.content.SharedPreferences
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
+import com.armhansa.mobilephonebuyerguide.extension.SortingPhoneModelList
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
-import com.armhansa.mobilephonebuyerguide.service.PhoneManager
+import com.armhansa.mobilephonebuyerguide.service.PhoneApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PhoneListPresenter(
-    private val phoneListener: PhoneListInterface,
+    private val view: PhoneListInterface,
     private val favoriteListener: OnFavoriteChangeListener?,
-    private val phoneApiManager: PhoneManager,
+    private val service: PhoneApiService,
     private val pref: SharedPreferences?
 ) {
     companion object {
         fun getInstance(
             phoneListener: PhoneListInterface,
             favoriteListener: OnFavoriteChangeListener?,
-            phoneApiManager: PhoneManager,
+            service: PhoneApiService,
             pref: SharedPreferences?
-        ) = PhoneListPresenter(phoneListener, favoriteListener, phoneApiManager, pref)
+        ) = PhoneListPresenter(phoneListener, favoriteListener, service, pref)
+    }
+
+    private var phones: ArrayList<PhoneModel> = arrayListOf()
+
+    fun setPhones(phones: ArrayList<PhoneModel>) {
+        this.phones = phones
+    }
+
+    fun sortedPhones(): ArrayList<PhoneModel> {
+        phones = SortingPhoneModelList.sorted(phones)
+        return phones
     }
 
     fun getPhoneModelFromApi() {
-        phoneApiManager.createService().getMobiles().enqueue(object : Callback<List<PhoneEntity>> {
+        service.getMobiles().enqueue(object : Callback<List<PhoneEntity>> {
             override fun onFailure(call: Call<List<PhoneEntity>>, t: Throwable) {
-                phoneListener.toastError(t)
+                view.toastError(t)
             }
 
             override fun onResponse(call: Call<List<PhoneEntity>>, response: Response<List<PhoneEntity>>) {
                 response.body()?.also { phonesEntity ->
                     if (phonesEntity.isNotEmpty()) {
                         val phonesModel = getPhoneModelFrom(phonesEntity)
-                        phoneListener.setPhones(phonesModel)
+                        view.setPhones(phonesModel)
                         val favoritesModel = getFavoriteModelFrom(phonesModel)
                         favoriteListener?.setFavorites(favoritesModel)
                     }
@@ -43,9 +55,7 @@ class PhoneListPresenter(
         })
     }
 
-    fun getPhoneModelFrom(
-        phonesEntity: List<PhoneEntity>
-    ): List<PhoneModel> {
+    fun getPhoneModelFrom(phonesEntity: List<PhoneEntity>): List<PhoneModel> {
         val phonesModel: ArrayList<PhoneModel> = arrayListOf()
         for (i in 0 until phonesEntity.count()) {
             val isFavorite = pref?.getBoolean("FAV_${phonesEntity[i].id}", false) ?: false
