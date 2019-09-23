@@ -1,10 +1,11 @@
-package com.armhansa.mobilephonebuyerguide
+package com.armhansa.mobilephonebuyerguide.activity.phonedetail
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneImagePagerAdapter
 import com.armhansa.mobilephonebuyerguide.entity.PhoneImageEntity
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
@@ -12,7 +13,8 @@ import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import kotlinx.android.synthetic.main.activity_phone_detail.*
 import kotlinx.android.synthetic.main.item_phone.txtName
 
-class PhoneDetailActivity : AppCompatActivity(), PhoneDetailInterface {
+class PhoneDetailActivity : AppCompatActivity(),
+    PhoneDetailInterface {
     companion object {
         private const val PHONE_MODEL_KEY = "phoneModelKey"
         fun startActivity(context: Context?, phoneModel: PhoneModel) {
@@ -22,7 +24,12 @@ class PhoneDetailActivity : AppCompatActivity(), PhoneDetailInterface {
         }
     }
 
-    private val presenter: PhoneDetailPresenter by lazy { PhoneDetailPresenter.getInstance(this, PhoneManager()) }
+    private val presenter: PhoneDetailPresenter by lazy {
+        PhoneDetailPresenter.getInstance(
+            this,
+            PhoneManager()
+        )
+    }
     private lateinit var phoneImagePagerAdapter: PhoneImagePagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

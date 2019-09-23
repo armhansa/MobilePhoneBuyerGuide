@@ -1,8 +1,9 @@
-package com.armhansa.mobilephonebuyerguide
+package com.armhansa.mobilephonebuyerguide.activity.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.fragment.favoritelist.FavoriteListFragment
 import com.armhansa.mobilephonebuyerguide.fragment.phonelist.PhoneListFragment

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.armhansa.mobilephonebuyerguide.PhoneDetailActivity
+import com.armhansa.mobilephonebuyerguide.activity.phonedetail.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.adapter.FavoriteListAdapter
 import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
 import com.armhansa.mobilephonebuyerguide.extension.SortingPhoneModelList

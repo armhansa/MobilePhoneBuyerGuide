@@ -1,6 +1,6 @@
 package com.armhansa.mobilephonebuyerguide.extension
 
-import com.armhansa.mobilephonebuyerguide.MainActivity
+import com.armhansa.mobilephonebuyerguide.activity.main.MainActivity
 import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 

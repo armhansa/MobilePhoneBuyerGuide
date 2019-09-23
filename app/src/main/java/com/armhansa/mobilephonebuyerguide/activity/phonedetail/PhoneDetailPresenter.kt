@@ -1,4 +1,4 @@
-package com.armhansa.mobilephonebuyerguide
+package com.armhansa.mobilephonebuyerguide.activity.phonedetail
 
 import com.armhansa.mobilephonebuyerguide.entity.PhoneImageEntity
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
