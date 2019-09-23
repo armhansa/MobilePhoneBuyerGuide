@@ -8,7 +8,7 @@ import com.armhansa.mobilephonebuyerguide.constant.SortType
 import com.armhansa.mobilephonebuyerguide.fragment.favoritelist.FavoriteListFragment
 import com.armhansa.mobilephonebuyerguide.fragment.phonelist.PhoneListFragment
 import com.armhansa.mobilephonebuyerguide.model.TabModel
-import com.armhansa.mobilephonebuyerguide.ui.main.SectionsPagerAdapter
+import com.armhansa.mobilephonebuyerguide.adapter.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
             TabModel("Favorite List", favoriteFragment)
         )
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(tabModel, supportFragmentManager)
+        val sectionsPagerAdapter =
+            SectionsPagerAdapter(tabModel, supportFragmentManager)
         viewPager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(viewPager)
         btnSort.setOnClickListener {

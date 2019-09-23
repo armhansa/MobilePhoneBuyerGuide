@@ -1,4 +1,4 @@
-package com.armhansa.mobilephonebuyerguide.ui.main
+package com.armhansa.mobilephonebuyerguide.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
