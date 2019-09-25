@@ -73,13 +73,13 @@ class PhoneListFragment : Fragment(), PhoneListInterface, OnClickItemPhoneListen
 
     override fun toastError(t: Throwable) {
         Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
-        pbLoading.isVisible = false
     }
 
     override fun setPhones(phones: List<PhoneModel>) {
-        presenter.setPhones(ArrayList(phones))
-        val sortedPhones = presenter.sortedPhones()
-        phoneListAdapter.setPhonesModel(sortedPhones)
+        phoneListAdapter.setPhonesModel(phones)
+    }
+
+    override fun invisibleProgressBar() {
         pbLoading.isVisible = false
     }
 

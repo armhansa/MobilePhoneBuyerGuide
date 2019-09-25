@@ -32,17 +32,19 @@ class PhoneListPresenter(
         service.getMobiles().enqueue(object : Callback<List<PhoneEntity>> {
             override fun onFailure(call: Call<List<PhoneEntity>>, t: Throwable) {
                 view.toastError(t)
+                view.invisibleProgressBar()
             }
 
             override fun onResponse(call: Call<List<PhoneEntity>>, response: Response<List<PhoneEntity>>) {
                 response.body()?.also { phonesEntity ->
                     if (phonesEntity.isNotEmpty()) {
-                        val phonesModel = getPhoneModelFrom(phonesEntity)
-                        view.setPhones(phonesModel)
-                        val favoritesModel = getFavoriteModelFrom(phonesModel)
+                        phones = ArrayList(getPhoneModelFrom(phonesEntity))
+                        view.setPhones(sortedPhones())
+                        val favoritesModel = getFavoriteModelFrom(phones)
                         favoriteListener?.setFavorites(favoritesModel)
                     }
                 }
+                view.invisibleProgressBar()
             }
         })
     }
