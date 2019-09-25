@@ -16,22 +16,25 @@
         <ImageView
                 android:id="@+id/imgPhone"
                 tools:srcCompat="@tools:sample/avatars[12]"
-                android:layout_width="@dimen/phone_thumb"
-                android:layout_height="@dimen/phone_thumb"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_margin="@dimen/phone_thumb_margin"
                 android:contentDescription="@string/mobile_image_desc"/>
 
         <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero_dp_for_use_weight"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_marginStart="@dimen/phone_item_detail_margin_start"
                 android:orientation="vertical"
                 android:padding="@dimen/phone_item_detail_padding">
 
-            <RelativeLayout
+            <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/phone_name_height">
+                    android:layout_height="@dimen/zero_dp_for_use_weight"
+                    android:layout_weight="2"
+                    tools:ignore="NestedWeights">
 
                 <TextView
                         android:id="@+id/txtName"
@@ -41,52 +44,58 @@
                         android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:maxWidth="@dimen/phone_name_max_width"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start|bottom"/>
 
                 <ImageButton
                         android:id="@+id/btnFav"
                         android:layout_width="@dimen/fav_icon"
                         android:layout_height="@dimen/fav_icon"
-                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="end|bottom"
                         android:background="@color/transparent100"
-                        card_view:srcCompat="@drawable/unfav"
+                        card_view:srcCompat="@drawable/ic_favorite_border_black_24dp"
                         android:padding="@dimen/zero_padding"
                         android:scaleType="fitCenter"
                         android:contentDescription="@string/fav_btn_desc"/>
 
-            </RelativeLayout>
+            </FrameLayout>
 
             <TextView
                     android:id="@+id/txtDesc"
                     tools:text="@tools:sample/lorem/random"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/phone_desc_height"
+                    android:layout_height="@dimen/zero_dp_for_use_weight"
+                    android:layout_weight="3"
                     android:maxLines="2"/>
 
-            <RelativeLayout
+            <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/phone_price_rating_height">
+                    android:layout_height="@dimen/zero_dp_for_use_weight"
+                    android:layout_weight="2">
 
                 <TextView
                         android:id="@+id/txtPrice"
                         tools:text="Price: $179.99"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:maxWidth="@dimen/phone_spec_max_width"
                         android:layout_height="match_parent"
+                        android:layout_gravity="start|center_horizontal"
                         tools:ignore="RelativeOverlap"/>
 
                 <TextView
                         android:id="@+id/txtRating"
                         tools:text="Rating: 4.9"
-                        android:gravity="center_vertical|end"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:maxWidth="@dimen/phone_spec_max_width"
                         android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="end|center_horizontal"
                         android:layout_marginEnd="@dimen/phone_rating_margin_end"
                         tools:ignore="RelativeOverlap"/>
 
-            </RelativeLayout>
+            </FrameLayout>
 
         </LinearLayout>
 

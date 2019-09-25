@@ -6,4 +6,6 @@
     <string name="rating_style">Rating: %1$.1f</string>
     <string name="short_price_style">%1$.2f</string>
     <string name="sort_image_desc">Sort Image Button</string>
+    <string name="mobile_list_tab_title">Mobile List</string>
+    <string name="favorite_list_tab_title">Favorite List</string>
 </resources>

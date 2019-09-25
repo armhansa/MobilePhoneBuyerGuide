@@ -11,8 +11,7 @@ import com.armhansa.mobilephonebuyerguide.service.PhoneApiService
 import com.armhansa.mobilephonebuyerguide.supporttest.SupportModel.Companion.getSupportPhonesEntity
 import com.armhansa.mobilephonebuyerguide.supporttest.SupportModel.Companion.getSupportPhonesModel
 import com.nhaarman.mockitokotlin2.*
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +23,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
-class PhoneListPresenterUnitTest {
+class PhoneListPresenterTest {
+
     @Mock
     lateinit var view: PhoneListInterface
     @Mock
@@ -39,7 +39,7 @@ class PhoneListPresenterUnitTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        presenter = PhoneListPresenter.getInstance(
+        presenter = PhoneListPresenter(
             view,
             favoriteListener,
             service,
@@ -60,13 +60,28 @@ class PhoneListPresenterUnitTest {
     }
 
     @Test
-    fun testGetPhoneModelFromApiSuccess() {
+    fun testGetPhoneModelFromApi() {
         //given
         whenever(service.getMobiles()).thenReturn(mock())
         //when
         presenter.getPhoneModelFromApi()
         //then
         verify(service).getMobiles()
+    }
+
+    @Test
+    fun testGetPhoneModelFromApiSuccess() {
+        //given
+        val call = mock<Call<List<PhoneEntity>>>()
+        whenever(service.getMobiles()).thenReturn(call)
+        whenever(call.enqueue(any())).thenAnswer {
+            it.getArgument<Callback<List<PhoneEntity>>>(0).onResponse(mock(), Response.success(getSupportPhonesEntity()))
+        }
+        //when
+        presenter.getPhoneModelFromApi()
+        //then
+        verify(view).setPhones(any())
+        verifyNoMoreInteractions(view)
     }
 
     @Test
@@ -115,13 +130,14 @@ class PhoneListPresenterUnitTest {
     @Test
     fun testGetPhoneModelFromEntity() {
         //given
+        whenever(pref.getBoolean("FAV_3", false)).thenReturn(true)
         //when
         val phones = presenter.getPhoneModelFrom(getSupportPhonesEntity())
         //then
         assertEquals(5, phones.count())
         assertFalse(phones[0].isFavorite)
         assertFalse(phones[1].isFavorite)
-        assertFalse(phones[2].isFavorite)
+        assertTrue(phones[2].isFavorite)
         assertFalse(phones[3].isFavorite)
         assertFalse(phones[4].isFavorite)
         assertEquals(1, phones[0].id)

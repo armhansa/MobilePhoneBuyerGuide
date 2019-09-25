@@ -4,6 +4,8 @@ import com.armhansa.mobilephonebuyerguide.activity.phonedetail.PhoneDetailInterf
 import com.armhansa.mobilephonebuyerguide.activity.phonedetail.PhoneDetailPresenter
 import com.armhansa.mobilephonebuyerguide.entity.PhoneImageEntity
 import com.armhansa.mobilephonebuyerguide.service.PhoneApiService
+import com.armhansa.mobilephonebuyerguide.supporttest.SupportModel.Companion.getSupportPhoneImageIdThree
+import com.armhansa.mobilephonebuyerguide.supporttest.SupportModel.Companion.getSupportPhoneImageIdTwo
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
@@ -20,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
-class PhoneDetailPresenterUnitTest {
+class PhoneDetailPresenterTest {
     @Mock
     lateinit var view: PhoneDetailInterface
     @Mock
@@ -31,11 +33,11 @@ class PhoneDetailPresenterUnitTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        presenter = PhoneDetailPresenter.getInstance(view, service)
+        presenter = PhoneDetailPresenter(view, service)
     }
 
     @Test
-    fun testGetMobileDetailImageListApiSuccess() {
+    fun testGetMobileDetailImageListApi() {
         //given
         val phoneId = 5
         whenever(service.getMobileImgById(phoneId)).thenReturn(mock())
@@ -43,7 +45,23 @@ class PhoneDetailPresenterUnitTest {
         presenter.getImageFromApi(phoneId)
         //then
         verify(service).getMobileImgById(phoneId)
-//        verify(view).setPhoneImageList(any())
+    }
+
+    @Test
+    fun testGetMobileDetailImageListApiSuccess() {
+        //given
+        val phoneId = 3
+        val call = mock<Call<List<PhoneImageEntity>>>()
+        whenever(service.getMobileImgById(phoneId)).thenReturn(call)
+        whenever(call.enqueue(any())).thenAnswer {
+            it.getArgument<Callback<List<PhoneImageEntity>>>(0)
+                .onResponse(mock(), Response.success(getSupportPhoneImageIdThree()))
+        }
+        //when
+        presenter.getImageFromApi(phoneId)
+        //then
+        verify(service).getMobileImgById(phoneId)
+        verify(view).setPhoneImageList(getSupportPhoneImageIdThree())
     }
 
     @Test
@@ -91,4 +109,17 @@ class PhoneDetailPresenterUnitTest {
         //then
         verifyNoMoreInteractions(view)
     }
+
+    @Test
+    fun testFixUrlImageLossHttp() {
+        //given
+        val phonesImage = getSupportPhoneImageIdTwo()
+        //when
+        presenter.fixUrlImageLossHttp(phonesImage)
+        //then
+        phonesImage.forEach {
+            assert(it.url.startsWith("http"))
+        }
+    }
+
 }

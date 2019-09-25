@@ -8,22 +8,16 @@ import kotlinx.android.parcel.Parcelize
 data class PhoneEntity(
     @SerializedName("id")
     val id: Int,
-
     @SerializedName("name")
     val name: String,
-
     @SerializedName("brand")
     val brand: String,
-
     @SerializedName("thumbImageURL")
     val thumbImageURL: String,
-
     @SerializedName("description")
     val description: String,
-
     @SerializedName("price")
     val price: Float,
-
     @SerializedName("rating")
     val rating: Float
 ) : Parcelable

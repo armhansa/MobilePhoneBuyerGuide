@@ -1,6 +1,7 @@
 package com.armhansa.mobilephonebuyerguide.supporttest
 
 import com.armhansa.mobilephonebuyerguide.entity.PhoneEntity
+import com.armhansa.mobilephonebuyerguide.entity.PhoneImageEntity
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 
 class SupportModel {
@@ -71,6 +72,46 @@ class SupportModel {
                     "https://cdn.mos.cms.futurecdn.net/7dUFmtHkmH7La9dFzew7Ri-650-80.jpg",
                     "Currently the only Sony handset to take a position in our best cheap phone list",
                     171.99f, 4.3f
+                )
+            )
+        }
+
+        fun getSupportPhoneImageIdThree(): List<PhoneImageEntity> {
+            return arrayListOf(
+                PhoneImageEntity(
+                    3,
+                    "https://www.91-img.com/gallery_images_uploads/9/5/95483e778ba595de71ba90fe06675dcf8b9f9d0a.jpg",
+                    3
+                ),
+                PhoneImageEntity(
+                    10,
+                    "http://www.91-img.com/pictures/moto-moto-g4-plus-mobile-phone-large-2.jpg",
+                    3
+                ),
+                PhoneImageEntity(
+                    11,
+                    "http://www.91-img.com/pictures/moto-moto-g4-plus-mobile-phone-large-3.jpg",
+                    3
+                )
+            )
+        }
+
+        fun getSupportPhoneImageIdTwo(): List<PhoneImageEntity> {
+            return arrayListOf(
+                PhoneImageEntity(
+                    2,
+                    "https://www.91-img.com/gallery_images_uploads/e/5/e5d5dd05841489a766156c845cb90d55d6dafe10.jpg",
+                    2
+                ),
+                PhoneImageEntity(
+                    8,
+                    "http://www.91-img.com/pictures/nokia-6-mobile-phone-hres-2.jpg",
+                    2
+                ),
+                PhoneImageEntity(
+                    9,
+                    "www.91-img.com/pictures/nokia-6-mobile-phone-hres-3.jpg",
+                    2
                 )
             )
         }

@@ -1,24 +1,17 @@
 package com.armhansa.mobilephonebuyerguide.adapter
 
-import android.content.Context
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.armhansa.mobilephonebuyerguide.R
+import com.armhansa.mobilephonebuyerguide.adapter.holder.FavoriteHolder
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
-import com.bumptech.glide.Glide
 
-class FavoriteListAdapter(
-    private val context: Context?,
-    private val listener: OnClickItemPhoneListener
-) : RecyclerView.Adapter<FavoriteHolder>() {
+class FavoriteListAdapter(private val listener: OnClickItemPhoneListener) : RecyclerView.Adapter<FavoriteHolder>() {
+
     private var phonesModel: ArrayList<PhoneModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteHolder {
-        return FavoriteHolder(parent, context, listener)
+        return FavoriteHolder(parent, listener)
     }
 
     override fun getItemCount(): Int = phonesModel.count()
@@ -34,30 +27,4 @@ class FavoriteListAdapter(
 
 }
 
-class FavoriteHolder(
-    parent: ViewGroup,
-    private val context: Context?,
-    private val listener: OnClickItemPhoneListener
-) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.item_favorite, parent, false)
-) {
-    private val imgPhone: ImageView = itemView.findViewById(R.id.imgPhone)
-    private val txtName: TextView = itemView.findViewById(R.id.txtName)
-    private val txtPrice: TextView = itemView.findViewById(R.id.txtPrice)
-    private val txtRating: TextView = itemView.findViewById(R.id.txtRating)
 
-    fun bind(phoneModel: PhoneModel) {
-        txtName.text = phoneModel.name
-        txtPrice.text = context!!.getString(R.string.short_price_style, phoneModel.price)
-        txtRating.text = context.getString(R.string.rating_style, phoneModel.rating)
-        context.let { context ->
-            Glide.with(context)
-                .load(phoneModel.thumbImageURL)
-                .into(imgPhone)
-        }
-        itemView.setOnClickListener {
-            listener.sendToDetailPage(phoneModel)
-        }
-
-    }
-}

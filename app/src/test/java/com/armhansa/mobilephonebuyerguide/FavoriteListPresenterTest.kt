@@ -17,7 +17,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class FavoriteListPresenterUnitTest {
+class FavoriteListPresenterTest {
     @Mock
     lateinit var pref: SharedPreferences
 
@@ -26,7 +26,7 @@ class FavoriteListPresenterUnitTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        presenter = FavoriteListPresenter.getInstance(pref)
+        presenter = FavoriteListPresenter(pref)
     }
 
     @Test
@@ -47,7 +47,7 @@ class FavoriteListPresenterUnitTest {
     @Test
     fun testRemoveFavoriteAtIndexPrefNull() {
         //given
-        presenter = FavoriteListPresenter.getInstance(null)
+        presenter = FavoriteListPresenter(null)
         val favorites = SupportModel.getSupportPhonesModel()
         presenter.setFavorites(favorites)
         val firstCount = presenter.getFavorites().count()

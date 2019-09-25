@@ -22,15 +22,13 @@ import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteRemoveListener
 import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import kotlinx.android.synthetic.main.fragment_favorite_list.*
 
-class FavoriteListFragment : Fragment()
-    , OnClickItemPhoneListener, OnFavoriteChangeListener {
+class FavoriteListFragment : Fragment(), OnClickItemPhoneListener, OnFavoriteChangeListener {
+
     companion object {
         fun newInstance() = FavoriteListFragment()
     }
 
-    private val presenter: FavoriteListPresenter by lazy {
-        FavoriteListPresenter.getInstance(pref)
-    }
+    private val presenter: FavoriteListPresenter by lazy { FavoriteListPresenter(pref) }
     private lateinit var favoriteListAdapter: FavoriteListAdapter
     private lateinit var phoneListener: OnFavoriteRemoveListener
     private val pref: SharedPreferences? by lazy {
@@ -53,7 +51,7 @@ class FavoriteListFragment : Fragment()
     }
 
     private fun setView() {
-        favoriteListAdapter = FavoriteListAdapter(context, this)
+        favoriteListAdapter = FavoriteListAdapter(this)
         rvFavorite.adapter = favoriteListAdapter
         rvFavorite.layoutManager = LinearLayoutManager(context)
         rvFavorite.itemAnimator = DefaultItemAnimator()

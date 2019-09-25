@@ -32,7 +32,8 @@
                         android:textSize="@dimen/title_text_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"/>
+                        android:maxWidth="@dimen/phone_detail_spec_max_width"
+                        android:layout_marginStart="@dimen/phone_detail_rating_margin_start"/>
 
                 <TextView
                         android:id="@+id/txtPrice"
@@ -40,9 +41,9 @@
                         android:textSize="@dimen/title_text_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxWidth="180dp"
+                        android:maxWidth="@dimen/phone_detail_spec_max_width"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginEnd="@dimen/phone_detail_price_margin_end"
                         tools:ignore="RelativeOverlap"/>
                 
             </RelativeLayout>
@@ -69,7 +70,7 @@
                     android:textSize="@dimen/title_text_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginStart="@dimen/phone_detail_brand_margin_start"/>
 
         </LinearLayout>
 
@@ -79,7 +80,7 @@
                 android:textSize="@dimen/phone_description_text_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="@dimen/phone_detail_detail_margin_top"/>
 
     </LinearLayout>
 

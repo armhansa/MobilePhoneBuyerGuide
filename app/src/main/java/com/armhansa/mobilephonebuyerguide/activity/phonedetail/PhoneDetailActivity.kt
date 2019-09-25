@@ -13,10 +13,11 @@ import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import kotlinx.android.synthetic.main.activity_phone_detail.*
 import kotlinx.android.synthetic.main.item_phone.txtName
 
-class PhoneDetailActivity : AppCompatActivity(),
-    PhoneDetailInterface {
+class PhoneDetailActivity : AppCompatActivity(), PhoneDetailInterface {
+
     companion object {
         private const val PHONE_MODEL_KEY = "phoneModelKey"
+
         fun startActivity(context: Context?, phoneModel: PhoneModel) {
             context?.startActivity(Intent(context, PhoneDetailActivity::class.java).apply {
                 putExtra(PHONE_MODEL_KEY, phoneModel)
@@ -24,12 +25,7 @@ class PhoneDetailActivity : AppCompatActivity(),
         }
     }
 
-    private val presenter: PhoneDetailPresenter by lazy {
-        PhoneDetailPresenter.getInstance(
-            this,
-            PhoneManager().createService()
-        )
-    }
+    private val presenter: PhoneDetailPresenter by lazy { PhoneDetailPresenter(this, PhoneManager().createService()) }
     private lateinit var phoneImagePagerAdapter: PhoneImagePagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +36,10 @@ class PhoneDetailActivity : AppCompatActivity(),
     }
 
     private fun setView() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
         val phoneModel: PhoneModel? = intent.getParcelableExtra(PHONE_MODEL_KEY)
         phoneModel?.let {
@@ -64,7 +62,7 @@ class PhoneDetailActivity : AppCompatActivity(),
     }
 
     override fun setPhoneImageList(images: List<PhoneImageEntity>) {
-        phoneImagePagerAdapter = PhoneImagePagerAdapter(this, images)
+        phoneImagePagerAdapter = PhoneImagePagerAdapter(images)
         pagerPhoneImg.adapter = phoneImagePagerAdapter
     }
 

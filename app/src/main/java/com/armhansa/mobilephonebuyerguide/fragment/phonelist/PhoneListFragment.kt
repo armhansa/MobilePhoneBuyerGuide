@@ -22,14 +22,14 @@ import com.armhansa.mobilephonebuyerguide.model.PhoneModel
 import com.armhansa.mobilephonebuyerguide.service.PhoneManager
 import kotlinx.android.synthetic.main.fragment_phone_list.*
 
-class PhoneListFragment : Fragment()
-    , PhoneListInterface, OnClickItemPhoneListener, OnFavoriteRemoveListener {
+class PhoneListFragment : Fragment(), PhoneListInterface, OnClickItemPhoneListener, OnFavoriteRemoveListener {
+
     companion object {
         fun newInstance() = PhoneListFragment()
     }
 
     private val presenter by lazy {
-        PhoneListPresenter.getInstance(
+        PhoneListPresenter(
             this,
             favoriteListener,
             PhoneManager().createService(),
@@ -49,20 +49,22 @@ class PhoneListFragment : Fragment()
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        presenter.getPhoneModelFromApi()
         return inflater.inflate(R.layout.fragment_phone_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setView()
+        presenter.getPhoneModelFromApi()
     }
 
     private fun setView() {
         phoneListAdapter = PhoneListAdapter(this, favoriteListener, pref)
-        rvPhone.adapter = phoneListAdapter
-        rvPhone.layoutManager = LinearLayoutManager(context)
-        rvPhone.itemAnimator = DefaultItemAnimator()
+        rvPhone.apply {
+            adapter = phoneListAdapter
+            layoutManager = LinearLayoutManager(context)
+            itemAnimator = DefaultItemAnimator()
+        }
     }
 
     fun setFavoriteListener(listener: OnFavoriteChangeListener) {

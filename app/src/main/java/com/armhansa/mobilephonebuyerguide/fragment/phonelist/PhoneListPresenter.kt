@@ -16,14 +16,6 @@ class PhoneListPresenter(
     private val service: PhoneApiService,
     private val pref: SharedPreferences?
 ) {
-    companion object {
-        fun getInstance(
-            phoneListener: PhoneListInterface,
-            favoriteListener: OnFavoriteChangeListener?,
-            service: PhoneApiService,
-            pref: SharedPreferences?
-        ) = PhoneListPresenter(phoneListener, favoriteListener, service, pref)
-    }
 
     private var phones: ArrayList<PhoneModel> = arrayListOf()
 
@@ -56,30 +48,23 @@ class PhoneListPresenter(
     }
 
     fun getPhoneModelFrom(phonesEntity: List<PhoneEntity>): List<PhoneModel> {
-        val phonesModel: ArrayList<PhoneModel> = arrayListOf()
-        for (i in 0 until phonesEntity.count()) {
-            val isFavorite = pref?.getBoolean("FAV_${phonesEntity[i].id}", false) ?: false
-            val phoneModel = PhoneModel(
-                phonesEntity[i].id,
-                phonesEntity[i].name,
-                phonesEntity[i].brand,
-                phonesEntity[i].thumbImageURL,
-                phonesEntity[i].description,
-                phonesEntity[i].price,
-                phonesEntity[i].rating,
+        return phonesEntity.map {
+            val isFavorite = pref?.getBoolean("FAV_${it.id}", false) ?: false
+            PhoneModel(
+                it.id,
+                it.name,
+                it.brand,
+                it.thumbImageURL,
+                it.description,
+                it.price,
+                it.rating,
                 isFavorite
             )
-            phonesModel.add(phoneModel)
         }
-        return phonesModel
     }
 
     fun getFavoriteModelFrom(phones: List<PhoneModel>): ArrayList<PhoneModel> {
-        val favorites: ArrayList<PhoneModel> = arrayListOf()
-        for (i in phones) {
-            if (i.isFavorite) favorites.add(i)
-        }
-        return favorites
+        return ArrayList(phones.filter { it.isFavorite })
     }
 
 }
