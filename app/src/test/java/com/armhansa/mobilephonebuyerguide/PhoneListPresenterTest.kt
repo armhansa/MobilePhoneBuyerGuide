@@ -81,7 +81,7 @@ class PhoneListPresenterTest {
         presenter.getPhoneModelFromApi()
         //then
         verify(view).setPhones(any())
-        verifyNoMoreInteractions(view)
+        verify(view).invisibleProgressBar()
     }
 
     @Test
@@ -96,7 +96,7 @@ class PhoneListPresenterTest {
         presenter.getPhoneModelFromApi()
         //then
         verify(view).toastError(any())
-        verifyNoMoreInteractions(view)
+        verify(view).invisibleProgressBar()
     }
 
     @Test
@@ -110,7 +110,7 @@ class PhoneListPresenterTest {
         //when
         presenter.getPhoneModelFromApi()
         //then
-        verifyZeroInteractions(view)
+        verify(view).invisibleProgressBar()
     }
 
     @Test
@@ -124,7 +124,7 @@ class PhoneListPresenterTest {
         //when
         presenter.getPhoneModelFromApi()
         //then
-        verifyZeroInteractions(view)
+        verify(view).invisibleProgressBar()
     }
 
     @Test
