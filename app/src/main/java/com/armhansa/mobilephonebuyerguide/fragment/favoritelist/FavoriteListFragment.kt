@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.activity.phonedetail.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.adapter.FavoriteListAdapter
-import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
+import com.armhansa.mobilephonebuyerguide.constant.PREFS_KEY
 import com.armhansa.mobilephonebuyerguide.extension.SwipeToDeleteCallback
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
@@ -33,7 +33,7 @@ class FavoriteListFragment : Fragment(), OnClickItemPhoneListener, OnFavoriteCha
     private lateinit var phoneListener: OnFavoriteRemoveListener
     private val pref: SharedPreferences? by lazy {
         context?.getSharedPreferences(
-            ConstantValue.PREFS_KEY,
+            PREFS_KEY,
             Context.MODE_PRIVATE
         )
     }

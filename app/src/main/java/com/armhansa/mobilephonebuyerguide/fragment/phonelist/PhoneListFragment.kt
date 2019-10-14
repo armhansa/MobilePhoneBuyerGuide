@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.armhansa.mobilephonebuyerguide.R
 import com.armhansa.mobilephonebuyerguide.activity.phonedetail.PhoneDetailActivity
 import com.armhansa.mobilephonebuyerguide.adapter.PhoneListAdapter
-import com.armhansa.mobilephonebuyerguide.constant.ConstantValue
+import com.armhansa.mobilephonebuyerguide.constant.PREFS_KEY
 import com.armhansa.mobilephonebuyerguide.listener.OnClickItemPhoneListener
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteChangeListener
 import com.armhansa.mobilephonebuyerguide.listener.OnFavoriteRemoveListener
@@ -40,7 +40,7 @@ class PhoneListFragment : Fragment(), PhoneListInterface, OnClickItemPhoneListen
     private lateinit var phoneListAdapter: PhoneListAdapter
     private val pref: SharedPreferences? by lazy {
         context?.getSharedPreferences(
-            ConstantValue.PREFS_KEY,
+            PREFS_KEY,
             Context.MODE_PRIVATE
         )
     }
