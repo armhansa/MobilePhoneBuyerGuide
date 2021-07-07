@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#4153af</color>
+    <color name="colorPrimaryDark">#2E409E</color>
+    <color name="colorAccent">@color/black</color>
+    <color name="black">#000</color>
+    <color name="transparent100">#00FFFFFF</color>
+    <color name="transparent60">#66FFFFFF</color>
+    <color name="swipeDelete">#f44336</color>
+    <color name="recycler_view_bg">#DDD</color>
 </resources>

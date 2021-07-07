@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="@dimen/card_view"
+        card_view:cardElevation="@dimen/card_view"
+        android:layout_margin="@dimen/card_view_margin">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/phone_item_height">
+
+        <ImageView
+                android:id="@+id/imgPhone"
+                tools:srcCompat="@tools:sample/avatars[12]"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/phone_thumb_margin"
+                android:contentDescription="@string/mobile_image_desc"/>
+
+        <LinearLayout
+                android:layout_width="@dimen/zero_dp_for_use_weight"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_marginStart="@dimen/phone_item_detail_margin_start"
+                android:orientation="vertical"
+                android:padding="@dimen/phone_item_detail_padding">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero_dp_for_use_weight"
+                    android:layout_weight="2"
+                    tools:ignore="NestedWeights">
+
+                <TextView
+                        android:id="@+id/txtName"
+                        tools:text="TEST"
+                        android:textSize="@dimen/title_text_size"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="@dimen/phone_name_max_width"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start|bottom"/>
+
+                <ImageButton
+                        android:id="@+id/btnFav"
+                        android:layout_width="@dimen/fav_icon"
+                        android:layout_height="@dimen/fav_icon"
+                        android:layout_gravity="end|bottom"
+                        android:background="@color/transparent100"
+                        card_view:srcCompat="@drawable/ic_favorite_border_black_24dp"
+                        android:padding="@dimen/zero_padding"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="@string/fav_btn_desc"/>
+
+            </FrameLayout>
+
+            <TextView
+                    android:id="@+id/txtDesc"
+                    tools:text="@tools:sample/lorem/random"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero_dp_for_use_weight"
+                    android:layout_weight="3"
+                    android:maxLines="2"/>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero_dp_for_use_weight"
+                    android:layout_weight="2">
+
+                <TextView
+                        android:id="@+id/txtPrice"
+                        tools:text="Price: $179.99"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="@dimen/phone_spec_max_width"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start|center_horizontal"
+                        tools:ignore="RelativeOverlap"/>
+
+                <TextView
+                        android:id="@+id/txtRating"
+                        tools:text="Rating: 4.9"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="@dimen/phone_spec_max_width"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end|center_horizontal"
+                        android:layout_marginEnd="@dimen/phone_rating_margin_end"
+                        tools:ignore="RelativeOverlap"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

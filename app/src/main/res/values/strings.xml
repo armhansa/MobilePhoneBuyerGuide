@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">MobilePhoneBuyerGuide</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="app_name">MobilePhone</string>
+    <string name="mobile_image_desc">Show Mobile Phone Image</string>
+    <string name="fav_btn_desc">Favorite Button for add to fav page</string>
+    <string name="price_style">Price: %1$.2f</string>
+    <string name="rating_style">Rating: %1$.1f</string>
+    <string name="short_price_style">%1$.2f</string>
+    <string name="sort_image_desc">Sort Image Button</string>
+    <string name="mobile_list_tab_title">Mobile List</string>
+    <string name="favorite_list_tab_title">Favorite List</string>
 </resources>

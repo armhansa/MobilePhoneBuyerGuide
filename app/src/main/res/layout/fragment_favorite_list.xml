@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/recycler_view_bg"
+             android:paddingStart="@dimen/fav_list_padding_horizontal"
+             android:paddingEnd="@dimen/fav_list_padding_horizontal"
+             android:paddingTop="@dimen/fav_list_padding_vertical"
+             android:paddingBottom="@dimen/fav_list_padding_vertical"
+             tools:context=".fragment.favoritelist.FavoriteListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_favorite"
+            tools:itemCount="3"/>
+
+</FrameLayout>
